@@ -391,7 +391,7 @@ EmoteSelect.prototype.updateLastUsed = function () {
     })[0];
     if (result) {
       source = result.u
-        ? `https://s.jezevec10.com/${result.u}`
+        ? `${result.u}`
         : `${this.path}${result["n"]}.svg`;
       this.usedImage = document.createElement("img");
       this.usedImage.setAttribute("src", source);
