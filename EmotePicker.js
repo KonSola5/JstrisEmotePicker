@@ -480,4 +480,10 @@ EmoteSelect.prototype.openButtonLogic = function () {
     this.updateLastUsed();
     this.emoteElem.classList.toggle("open");
   });
+  if(!document.getElementById('fuseScript')){
+    let script = document.createElement('script')
+    script.id = "fuseScript"
+    script.src = 'https://cdn.jsdelivr.net/npm/fuse.js@6.4.3'
+    document.head.appendChild(script)
+}
 };
