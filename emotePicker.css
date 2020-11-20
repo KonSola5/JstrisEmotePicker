@@ -4,57 +4,85 @@
   right: 3px;
   width: 15px;
   height: 15px;
+  padding: 20px;
   background-color: rgb(253, 251, 104);
 }
 
 .emotePicker {
   position: absolute;
   overflow-y: hidden;
+  display: none;
   width: 80%;
   height: 250px;
-  background-color: rgb(37, 37, 37);
+  background-color: #2f3136;
   z-index: 3;
   bottom: 28px;
   right: 0;
 }
 
+.open {
+  display: block !important;
+}
+
+.emoteForm {
+  box-shadow: 0px 2px 0px 0px rgba(6, 6, 7, 0.2);
+  padding: 10px;
+  height: 20%;
+}
+
 #emoteSearch {
   height: 30px;
-  margin-top: 7px;
-  padding: 3px;
+  padding: 3px !important;
+  border-radius: 3px !important;
+  margin: 0;
+  width: 99%;
 }
 
 .optionsContainer {
   display: flex;
   flex-direction: row-reverse;
+  max-height: 80%;
 }
 
 .emotesWrapper {
-  margin-top: 12px;
-  width: 100%;
+  width: 84%;
   max-height: 200px;
   overflow-y: scroll;
+  padding: 0 5px;
 }
 
-.emotesGroup {
-  width: 100%;
+.emotesGroup,
+#usedWrapper {
+  width: 102%;
   display: flex;
   flex-wrap: wrap;
   margin-top: 0px !important;
-  margin-bottom: 5px !important;
 }
 
 .emotesGroup h3 {
   width: 100%;
 }
 
+.groupName {
+  text-align: left;
+  margin-left: 5px;
+}
+
 .emoteImg {
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
+  margin-bottom: 5px;
   padding: 3px;
   border-radius: 3px;
+}
+
+.jstrisEmote{
+  padding: 6px !important;
+}
+
+.jstrisSelector {
+  padding: 4px !important;
 }
 
 .emoteImg:hover {
@@ -71,22 +99,24 @@
   width: 30px;
   height: 30px;
   filter: grayscale(100%);
+  border-radius: 50%;
 }
 
 .groupLink:hover {
   filter: grayscale(0%);
+  cursor: pointer;
 }
 
-.selectionDiv {
+#selectionDiv {
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-  max-height: 200px;
-  width: 60px;
+  width: 16%;
   padding: 5px;
   align-items: center;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  background-color: #202225;
 }
 
 .selectionDiv::-webkit-scrollbar {
@@ -95,11 +125,14 @@
 
 #searchResults {
   position: relative;
-  z-index: 6;
-  background-color: #252525;
-  bottom: 214px;
+  z-index: 2;
+  background-color: #2f3136;
+  bottom: 80%;
   width: 100%;
-  height: 86%;
+  height: 80%;
   overflow-y: scroll;
-  padding-top: 10px;
 }
+
+#selectionDiv .tooltip > .tooltip-inner, #emotebox .tooltip > .tooltip-arrow {background-color: rgba(0, 0, 0, 0.9);}
+
+#searchResults .tooltip > .tooltip-inner, #emotebox .tooltip > .tooltip-arrow {background-color: rgba(0, 0, 0, 0.9);}
