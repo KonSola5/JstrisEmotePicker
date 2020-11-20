@@ -427,7 +427,7 @@ EmoteSelect.prototype.updateLastUsed = function () {
 };
 
 EmoteSelect.prototype.setStoredEmotes = function (target) {
-  const MAX_LENGTH_EMOTES = 30;
+  const MAX_LENGTH_EMOTES = 24;
   let emotes = JSON.parse(localStorage.getItem("lastUsed"));
   let updatedEmotes;
   let emoteName = target.getAttribute("data-emoteName");
