@@ -188,14 +188,16 @@ EmoteSelect.prototype.selectGroup = function () {
     this.groupImage.setAttribute("title", `${group}`);
     this.groupImage.setAttribute("data-toggle", "tooltip");
     this.groupImage.setAttribute("data-placement", "right");
-    let filtered = this.emoteList.filter(emote => emote['n'] === this.groupEmotes[group])
-    if (filtered['u']) {
+    let filtered = this.emoteList.filter(
+      (emote) => emote["n"] === this.groupEmotes[group]
+    );
+    if (filtered.length <= 0) {
       this.groupImage.setAttribute("src", `${this.groupEmotes[group]}`);
       this.groupImage.classList.add("jstrisSelector");
-    } else {
+    } else if (!filtered["u"]) {
       this.groupImage.setAttribute(
         "src",
-        `${this.path}${this.groupEmotes[group]}.svg`
+        `${this.path}${this.groupEmotes[group]}-2.svg`
       );
     }
     this.selectionDiv.appendChild(this.groupImage);
@@ -387,23 +389,27 @@ EmoteSelect.prototype.updateLastUsed = function () {
     let result = emoteList.filter((emote) => {
       return emote["n"] === pattern;
     })[0];
-    source = result.u ? `${result.u}` : `${this.path}${result["n"]}.svg`;
-    this.usedImage = document.createElement("img");
-    this.usedImage.setAttribute("src", source);
-    this.usedImage.setAttribute("data-emoteName", result["n"]);
-    this.usedImage.classList.add("emoteImg");
-    if (result["u"]) {
-      this.usedImage.classList.add("jstrisEmote");
+    if (result) {
+      source = result.u
+        ? `https://s.jezevec10.com/${result.u}`
+        : `${this.path}${result["n"]}-2.svg`;
+      this.usedImage = document.createElement("img");
+      this.usedImage.setAttribute("src", source);
+      this.usedImage.setAttribute("data-emoteName", result["n"]);
+      this.usedImage.classList.add("emoteImg");
+      if (result["u"]) {
+        this.usedImage.classList.add("jstrisEmote");
+      }
+      this.usedImage.addEventListener("click", (e) => {
+        this.chatEmote(e.target);
+        this.setStoredEmotes(e.target);
+        this.hideElem();
+      });
+      this.usedImage.addEventListener("mouseover", (e) => {
+        this.showName(e.target);
+      });
+      usedFragment.appendChild(this.usedImage);
     }
-    this.usedImage.addEventListener("click", (e) => {
-      this.chatEmote(e.target);
-      this.setStoredEmotes(e.target);
-      this.hideElem()
-    });
-    this.usedImage.addEventListener("mouseover", (e) => {
-      this.showName(e.target);
-    });
-    usedFragment.appendChild(this.usedImage);
   });
   emotesContainer.appendChild(usedFragment);
 };
