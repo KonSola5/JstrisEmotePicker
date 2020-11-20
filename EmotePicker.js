@@ -438,9 +438,9 @@ EmoteSelect.prototype.setStoredEmotes = function (target) {
     for (let emote of emotes) {
       i += 1;
       if (emoteName in emote) {
-        let name = Object.keys(emote)[0];
-        updatedEmotes = emotes;
-        updatedEmotes[i][name] = Math.floor(Date.now() / 1000);
+        updatedEmotes = emotes.filter((emote) => emote[emoteName] !== emotes[i][emoteName])
+        let newestEmote = { [emoteName]: Math.floor(Date.now() / 1000) };
+        updatedEmotes.push(newestEmote)
         exists = true;
         break;
       }
@@ -465,9 +465,9 @@ EmoteSelect.prototype.setStoredEmotes = function (target) {
     let i = 0;
     for (let emote of emotes) {
       if (emoteName in emote) {
-        let name = Object.keys(emote)[0];
-        updatedEmotes = emotes;
-        updatedEmotes[i][name] = Math.floor(Date.now() / 1000);
+        updatedEmotes = emotes.filter((emote) => emote[emoteName] !== emotes[i][emoteName])
+        let newestEmote = { [emoteName]: Math.floor(Date.now() / 1000) };
+        updatedEmotes.push(newestEmote)
         exists = true;
         break;
       }
@@ -479,10 +479,12 @@ EmoteSelect.prototype.setStoredEmotes = function (target) {
       updatedEmotes.push(newestEmote);
     }
   }
-  let sortedEmotes = updatedEmotes.sort((a, b) => {
-    return b[Object.keys(b)[0]] - a[Object.keys(a)[0]];
-  });
-  localStorage.setItem("lastUsed", JSON.stringify(sortedEmotes));
+  // sort emotes and set them to local storage
+    let sortedEmotes = updatedEmotes.sort((a, b) => {
+      return b[Object.keys(b)[0]] - a[Object.keys(a)[0]];
+    });
+    //console.log(emotes)
+    localStorage.lastUsed = JSON.stringify(sortedEmotes);
 };
 
 EmoteSelect.prototype.hideElem = function () {
