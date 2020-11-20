@@ -119,7 +119,7 @@
   background-color: #202225;
 }
 
-.selectionDiv::-webkit-scrollbar {
+#selectionDiv::-webkit-scrollbar {
   display: none;
 }
 
