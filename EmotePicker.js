@@ -138,13 +138,13 @@ EmoteSelect.prototype.createImages = async function (emotes, target) {
   let grouped = emotes.filter((emote) => emote["g"] === `${group}`);
   for (let i = 0; i < grouped.length; i++) {
     self.emoteImg = document.createElement("img");
-    let source;
-    if (grouped[i]["p"]) {
-      source = grouped[i]["p"];
-    } else if (grouped[i]["u"]) {
-      source = grouped[i]["u"];
-    } else {
-      source = `${this.path}${grouped[i]["n"]}.svg`;
+    let source
+    if(grouped[i]['p']){
+      source = grouped[i]['p']
+    } else if(grouped[i]["u"]){
+      source = grouped[i]["u"]
+    } else{
+      source = `${this.path}${grouped[i]["n"]}.svg`
     }
     self.emoteImg.classList.add("emoteImg", "loadingEmote");
     if (grouped[i]["u"]) {
@@ -159,7 +159,7 @@ EmoteSelect.prototype.createImages = async function (emotes, target) {
     self.emoteImg.addEventListener("click", (e) => {
       this.chatEmote(e.target);
       this.setStoredEmotes(e.target);
-      this.hideElem();
+      this.hideElem()
     });
     self.emoteImg.addEventListener("mouseover", (e) => {
       this.showName(e.target);
@@ -279,7 +279,7 @@ EmoteSelect.prototype.searchFunction = function (list) {
     self.emoteResult.addEventListener("click", (e) => {
       this.chatEmote(e.target);
       this.setStoredEmotes(e.target);
-      this.hideElem();
+      this.hideElem()
     });
     observer.observe(this.emoteResult);
     self.resultsFragment.appendChild(this.emoteResult);
@@ -307,24 +307,21 @@ EmoteSelect.prototype.chatEmote = function (target) {
   let emoteName = target.getAttribute("data-emoteName");
   let origText = this.input.value;
   let pos = this.getCaretPosition();
-  this.input.value =
-    origText.substring(0, pos) +
-    `:${emoteName}: ` +
-    origText.substring(pos, origText.length);
+  this.input.value = origText.substring(0, pos) + `:${emoteName}: ` + origText.substring(pos, origText.length);
   this.input.focus();
   this.setCaretPosition(pos + emoteName.length + 3);
 };
 
 EmoteSelect.prototype.getCaretPosition = function () {
-  if (this.input.selectionStart || this.input.selectionStart == "0") {
+  if(this.input.selectionStart || this.input.selectionStart == '0'){
     return this.input.selectionStart;
-  } else {
+  }else{
     return this.input.value.length; // No support
   }
 };
 
-EmoteSelect.prototype.setCaretPosition = function (pos) {
-  pos = Math.max(Math.min(pos, this.input.value.length), 0);
+EmoteSelect.prototype.setCaretPosition = function(pos) {
+  pos = Math.max(Math.min(pos, this.input.value.length), 0);   
   if (this.input.setSelectionRange) {
     this.input.setSelectionRange(pos, pos);
   }
@@ -398,13 +395,12 @@ EmoteSelect.prototype.updateLastUsed = function () {
       return emote["n"] === pattern;
     })[0];
     if (result) {
-      let source;
-      if (grouped[i]["p"]) {
-        source = grouped[i]["p"];
-      } else if (grouped[i]["u"]) {
-        source = grouped[i]["u"];
+      if(result.p){
+        source = result.p
+      } else if(result.u){
+        source = result.u
       } else {
-        source = `${this.path}${grouped[i]["n"]}.svg`;
+        source =`${this.path}${result["n"]}.svg`
       }
       this.usedImage = document.createElement("img");
       this.usedImage.setAttribute("src", source);
@@ -483,9 +479,9 @@ EmoteSelect.prototype.setStoredEmotes = function (target) {
   localStorage.setItem("lastUsed", JSON.stringify(updatedEmotes));
 };
 
-EmoteSelect.prototype.hideElem = function () {
+EmoteSelect.prototype.hideElem = function(){
   this.emoteElem.classList.toggle("open");
-};
+}
 
 EmoteSelect.prototype.openButtonLogic = function () {
   let searchBar = document.getElementById("emoteSearch");
@@ -500,10 +496,10 @@ EmoteSelect.prototype.openButtonLogic = function () {
     this.updateLastUsed();
     this.emoteElem.classList.toggle("open");
   });
-  if (!document.getElementById("fuseScript")) {
-    let script = document.createElement("script");
-    script.id = "fuseScript";
-    script.src = "https://cdn.jsdelivr.net/npm/fuse.js@6.4.3";
-    document.head.appendChild(script);
-  }
+  if(!document.getElementById('fuseScript')){
+    let script = document.createElement('script')
+    script.id = "fuseScript"
+    script.src = 'https://cdn.jsdelivr.net/npm/fuse.js@6.4.3'
+    document.head.appendChild(script)
+}
 };
