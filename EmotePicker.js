@@ -393,7 +393,6 @@ EmoteSelect.prototype.updateLastUsed = function () {
   let pattern;
   let source;
   used.forEach((emote) => {
-    console.log(usedFragment.length)
     pattern = Object.keys(emote)[0];
     let result = emoteList.filter((emote) => {
       return emote["n"] === pattern;
@@ -432,6 +431,12 @@ EmoteSelect.prototype.setStoredEmotes = function (target) {
   let emotes = JSON.parse(localStorage.getItem("lastUsed"));
   let updatedEmotes;
   let emoteName = target.getAttribute("data-emoteName");
+  if(emotes.length > MAX_LENGTH_EMOTES){
+    updatedEmotes = []
+    for(let i = 0; i<MAX_LENGTH_EMOTES;i++){
+      updatedEmotes.push(emotes[i])
+    }
+  }
   if (emotes.length === MAX_LENGTH_EMOTES) {
     // check if emote exists
     let exists = false;
@@ -484,7 +489,6 @@ EmoteSelect.prototype.setStoredEmotes = function (target) {
     let sortedEmotes = updatedEmotes.sort((a, b) => {
       return b[Object.keys(b)[0]] - a[Object.keys(a)[0]];
     });
-    //console.log(emotes)
     localStorage.lastUsed = JSON.stringify(sortedEmotes);
 };
 
