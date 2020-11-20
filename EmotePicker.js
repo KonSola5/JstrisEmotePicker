@@ -490,7 +490,7 @@ EmoteSelect.prototype.setStoredEmotes = function (target) {
 EmoteSelect.prototype.hideElem = function () {
   this.emotesWrapper.scrollTo(0, 0);
   this.selectionDiv.scrollTo(0, 0);
- // this.emoteElem.classList.toggle("open");
+  this.emoteElem.classList.toggle("open");
 };
 
 EmoteSelect.prototype.openButtonLogic = function () {
