@@ -24,11 +24,6 @@ EmoteSelect.prototype.init = async function () {
   this.comment = document.createComment("Designed and developed by Erickmack");
   this.emoteElem.appendChild(this.comment);
   this.initializeContainers();
-  // add EventListener to emote button
-  this.openBtn.addEventListener("click", function (e) {
-    hideElem(this.emoteElem);
-  });
-
   this.emoteList =
     typeof this.emoteIndex === "string"
       ? await fetch(this.emoteIndex).then((res) => res.json())
@@ -36,7 +31,7 @@ EmoteSelect.prototype.init = async function () {
 
   this.initializeEmotes();
   this.lastUsed();
-  this.hideShowElem();
+  this.openBtn();
 };
 
 EmoteSelect.prototype.initializeContainers = function () {
@@ -154,12 +149,12 @@ EmoteSelect.prototype.createImages = async function (emotes, target) {
       e.target.classList.remove("loadingEmote");
     };
     observer.observe(self.emoteImg);
-    self.emoteImg.setAttribute("loading", "lazy");
     self.emoteImg.setAttribute("data-emoteName", `${grouped[i]["n"]}`);
     self.emoteImg.setAttribute("data-source", source);
     self.emoteImg.addEventListener("click", (e) => {
       this.chatEmote(e.target);
       this.setStoredEmotes(e.target);
+      this.hideElem()
     });
     self.emoteImg.addEventListener("mouseover", (e) => {
       this.showName(e.target);
@@ -276,6 +271,7 @@ EmoteSelect.prototype.searchFunction = function (list) {
     self.emoteResult.addEventListener("click", (e) => {
       this.chatEmote(e.target);
       this.setStoredEmotes(e.target);
+      this.hideElem()
     });
     observer.observe(this.emoteResult);
     self.resultsFragment.appendChild(this.emoteResult);
@@ -301,7 +297,6 @@ EmoteSelect.prototype.setSource = function (changes, observer) {
 
 EmoteSelect.prototype.chatEmote = function (target) {
   let emoteName = target.getAttribute("data-emoteName");
-  console.log(this.emoteIndex);
   this.input.value += `:${emoteName}: `;
 };
 
@@ -383,6 +378,7 @@ EmoteSelect.prototype.updateLastUsed = function () {
     this.usedImage.addEventListener("click", (e) => {
       this.chatEmote(e.target);
       this.setStoredEmotes(e.target);
+      this.hideElem()
     });
     this.usedImage.addEventListener("mouseover", (e) => {
       this.showName(e.target);
@@ -433,7 +429,6 @@ EmoteSelect.prototype.setStoredEmotes = function (target) {
       if (emoteName in emote) {
         let name = Object.keys(emote)[0];
         updatedEmotes = emotes;
-        console.log(updatedEmotes[i]);
         updatedEmotes[i][name] = Math.floor(Date.now() / 1000);
         exists = true;
         break;
@@ -442,7 +437,6 @@ EmoteSelect.prototype.setStoredEmotes = function (target) {
     }
     if (!exists) {
       let newestEmote = { [emoteName]: Math.floor(Date.now() / 1000) };
-      console.log(newestEmote);
       updatedEmotes = emotes;
       updatedEmotes.push(newestEmote);
     }
@@ -450,7 +444,11 @@ EmoteSelect.prototype.setStoredEmotes = function (target) {
   localStorage.setItem("lastUsed", JSON.stringify(updatedEmotes));
 };
 
-EmoteSelect.prototype.hideShowElem = function () {
+EmoteSelect.prototype.hideElem = function(){
+  this.emoteElem.classList.toggle("open");
+}
+
+EmoteSelect.prototype.openButton = function () {
   let searchBar = document.getElementById("emoteSearch");
   this.openBtn.addEventListener("click", () => {
     searchBar.value = "";
