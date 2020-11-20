@@ -297,7 +297,6 @@ EmoteSelect.prototype.setSource = function (changes, observer) {
 
 EmoteSelect.prototype.chatEmote = function (target) {
   let emoteName = target.getAttribute("data-emoteName");
-  console.log(this.emoteIndex);
   let origText = this.input.value;
   let pos = this.getCaretPosition();
   this.input.value = origText.substring(0, pos) + `:${emoteName}: ` + origText.substring(pos, origText.length);
