@@ -297,7 +297,27 @@ EmoteSelect.prototype.setSource = function (changes, observer) {
 
 EmoteSelect.prototype.chatEmote = function (target) {
   let emoteName = target.getAttribute("data-emoteName");
-  this.input.value += `:${emoteName}: `;
+  console.log(this.emoteIndex);
+  let origText = this.input.value;
+  let pos = this.getCaretPosition();
+  this.input.value = origText.substring(0, pos) + `:${emoteName}: ` + origText.substring(pos, origText.length);
+  this.input.focus();
+  this.setCaretPosition(pos + emoteName.length + 3);
+};
+
+EmoteSelect.prototype.getCaretPosition = function () {
+  if(this.input.selectionStart || this.input.selectionStart == '0'){
+    return this.input.selectionStart;
+  }else{
+    return this.input.value.length; // No support
+  }
+};
+
+EmoteSelect.prototype.setCaretPosition = function(pos) {
+  pos = Math.max(Math.min(pos, this.input.value.length), 0);   
+  if (this.input.setSelectionRange) {
+    this.input.setSelectionRange(pos, pos);
+  }
 };
 
 EmoteSelect.prototype.lastUsed = function () {
