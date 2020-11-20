@@ -438,7 +438,7 @@ EmoteSelect.prototype.setStoredEmotes = function (target) {
     for (let emote of emotes) {
       i += 1;
       if (emoteName in emote) {
-        updatedEmotes = emotes.filter((emote) => emote[emoteName] !== emotes[i][emoteName])
+        updatedEmotes = emotes.filter((emote) => emote[emoteName] === emotes[i][emoteName])
         let newestEmote = { [emoteName]: Math.floor(Date.now() / 1000) };
         updatedEmotes.push(newestEmote)
         exists = true;
@@ -490,7 +490,7 @@ EmoteSelect.prototype.setStoredEmotes = function (target) {
 EmoteSelect.prototype.hideElem = function () {
   this.emotesWrapper.scrollTo(0, 0);
   this.selectionDiv.scrollTo(0, 0);
-  this.emoteElem.classList.toggle("open");
+ // this.emoteElem.classList.toggle("open");
 };
 
 EmoteSelect.prototype.openButtonLogic = function () {
