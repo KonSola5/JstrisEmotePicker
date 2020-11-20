@@ -197,7 +197,7 @@ EmoteSelect.prototype.selectGroup = function () {
     } else if (!filtered["u"]) {
       this.groupImage.setAttribute(
         "src",
-        `${this.path}${this.groupEmotes[group]}-2.svg`
+        `${this.path}${this.groupEmotes[group]}.svg`
       );
     }
     this.selectionDiv.appendChild(this.groupImage);
@@ -392,7 +392,7 @@ EmoteSelect.prototype.updateLastUsed = function () {
     if (result) {
       source = result.u
         ? `https://s.jezevec10.com/${result.u}`
-        : `${this.path}${result["n"]}-2.svg`;
+        : `${this.path}${result["n"]}.svg`;
       this.usedImage = document.createElement("img");
       this.usedImage.setAttribute("src", source);
       this.usedImage.setAttribute("data-emoteName", result["n"]);
