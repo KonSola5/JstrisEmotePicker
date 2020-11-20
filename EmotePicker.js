@@ -393,6 +393,7 @@ EmoteSelect.prototype.updateLastUsed = function () {
   let pattern;
   let source;
   used.forEach((emote) => {
+    console.log(usedFragment.length)
     pattern = Object.keys(emote)[0];
     let result = emoteList.filter((emote) => {
       return emote["n"] === pattern;
@@ -459,7 +460,7 @@ EmoteSelect.prototype.setStoredEmotes = function (target) {
       let newestEmote = { [emoteName]: Math.floor(Date.now() / 1000) };
       updatedEmotes.push(newestEmote);
     }
-  } else if (emotes.length < 30) {
+  } else if (emotes.length < MAX_LENGTH_EMOTES) {
     // check if emote exists
     let exists = false;
     let i = 0;
