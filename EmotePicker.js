@@ -188,7 +188,8 @@ EmoteSelect.prototype.selectGroup = function () {
     this.groupImage.setAttribute("title", `${group}`);
     this.groupImage.setAttribute("data-toggle", "tooltip");
     this.groupImage.setAttribute("data-placement", "right");
-    if (group === "Jstris") {
+    let filtered = this.emoteList.filter(emote => emote['n'] === this.groupEmotes[group])
+    if (filtered['u']) {
       this.groupImage.setAttribute("src", `${this.groupEmotes[group]}`);
       this.groupImage.classList.add("jstrisSelector");
     } else {
