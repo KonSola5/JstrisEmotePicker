@@ -31,7 +31,7 @@ EmoteSelect.prototype.init = async function () {
 
   this.initializeEmotes();
   this.lastUsed();
-  this.openBtn();
+  this.openButtonLogic();
 };
 
 EmoteSelect.prototype.initializeContainers = function () {
@@ -467,7 +467,7 @@ EmoteSelect.prototype.hideElem = function(){
   this.emoteElem.classList.toggle("open");
 }
 
-EmoteSelect.prototype.openButton = function () {
+EmoteSelect.prototype.openButtonLogic = function () {
   let searchBar = document.getElementById("emoteSearch");
   this.openBtn.addEventListener("click", () => {
     searchBar.value = "";
