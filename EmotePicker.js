@@ -265,9 +265,14 @@ EmoteSelect.prototype.searchFunction = function (list) {
   self.resultsFragment = document.createDocumentFragment();
   for (let i = 0; i < results.length; i++) {
     let result = results[i]["item"];
-    let source = result["u"]
-      ? `${result["u"]}`
-      : `${this.path}${result["n"]}.svg`;
+    let source
+    if (result["p"]) {
+      source = result["p"];
+    } else if (result["u"]) {
+      source = result["u"];
+    } else {
+      source = `${this.path}${result["n"]}.svg`;
+    }
     self.emoteResult = document.createElement("img");
     self.emoteResult.classList.add("emoteImg", "loadingEmote", "resultImg");
     self.emoteResult.setAttribute("data-source", source);
