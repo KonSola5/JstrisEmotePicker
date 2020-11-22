@@ -28,7 +28,6 @@ EmoteSelect.prototype.init = async function () {
     typeof this.emoteIndex === "string"
       ? await fetch(this.emoteIndex).then((res) => res.json())
       : this.emoteIndex;
-
   this.initializeEmotes();
   this.lastUsed();
   this.openButtonLogic();
@@ -40,10 +39,14 @@ EmoteSelect.prototype.initializeContainers = function () {
   this.searchElem.classList.add("form-inline", "emoteForm");
   this.emoteElem.appendChild(this.searchElem);
   this.searchBar = document.createElement("input");
+  this.searchBar.setAttribute('autocomplete','off')
   this.searchBar.classList.add("form-control");
   this.searchBar.id = "emoteSearch";
   this.searchBar.addEventListener("input", () => {
     this.searchFunction(this.emoteList);
+  });
+  this.searchElem.addEventListener("submit", (e) => {
+    e.preventDefault()
   });
   this.searchBar.setAttribute("type", "text");
   this.searchBar.setAttribute("placeholder", "Search Emotes");
