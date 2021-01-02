@@ -128,6 +128,7 @@ EmoteSelect.prototype.donateInfo = function (groups) {
   if (groups.length > 2) return;
   this.donateLink = document.createElement("a");
   this.donateLink.classList.add("mSkInf");
+  this.donateLink.id = 'mSkInf-s'
   this.donateLink.setAttribute("href", "/donate");
   this.icon = document.createElement("i");
   this.icon.classList.add("glyphicon", "glyphicon-info-sign");
