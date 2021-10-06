@@ -290,10 +290,15 @@ EmoteSelect.prototype.searchFunction = function (list) {
   for (let i = 0; i < results.length; i++) {
     let result = results[i]["item"];
     let source;
-    if (result["p"]) {
-      source = result["p"];
-    } else if (result["u"]) {
-      source = result["u"];
+    if (result.p) {
+      source = result.p;
+    } else if (result.u) {
+      // Custom emote url
+      source = result.u;
+      // Should be absolute url or relative to webroot
+      if(source && !source.startsWith("http") && !source.startsWith("/")){
+        source = "/" + source;
+      }
     } else {
       source = `${this.path}${result["n"]}.svg`;
     }
@@ -433,7 +438,12 @@ EmoteSelect.prototype.updateLastUsed = function () {
       if (result.p) {
         source = result.p;
       } else if (result.u) {
+        // Custom emote url
         source = result.u;
+        // Should be absolute url or relative to webroot
+        if(source && !source.startsWith("http") && !source.startsWith("/")){
+          source = "/" + source;
+        }
       } else {
         source = `${this.path}${result["n"]}.svg`;
       }
