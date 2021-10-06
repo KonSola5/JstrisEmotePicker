@@ -141,6 +141,22 @@ EmoteSelect.prototype.donateInfo = function (groups) {
   this.emotesWrapper.appendChild(this.donateLink);
 };
 
+EmoteSelect.prototype.getEmoteSource = function (emoteObj) {
+  if (emoteObj.p) {
+    source = emoteObj.p;
+  } else if (emoteObj.u) {
+    // Custom emote url
+    source = emoteObj.u;
+    // Should be absolute url or relative to webroot
+    if(source && !source.startsWith("http") && !source.startsWith("/")){
+      source = "/" + source;
+    }
+  } else {
+    source = `${this.path}${emoteObj["n"]}.svg`;
+  }
+  return source;
+}
+
 EmoteSelect.prototype.createImages = async function (emotes, target) {
   let self = this;
 
@@ -159,14 +175,7 @@ EmoteSelect.prototype.createImages = async function (emotes, target) {
   let grouped = emotes.filter((emote) => emote["g"] === `${group}`);
   for (let i = 0; i < grouped.length; i++) {
     self.emoteImg = document.createElement("img");
-    let source;
-    if (grouped[i]["p"]) {
-      source = grouped[i]["p"];
-    } else if (grouped[i]["u"]) {
-      source = grouped[i]["u"];
-    } else {
-      source = `${this.path}${grouped[i]["n"]}.svg`;
-    }
+    let source = this.getEmoteSource(grouped[i]);
     self.emoteImg.classList.add("emoteImg", "loadingEmote");
     if (grouped[i]["u"]) {
       self.emoteImg.classList.add("jstrisEmote");
@@ -289,19 +298,7 @@ EmoteSelect.prototype.searchFunction = function (list) {
   self.resultsFragment = document.createDocumentFragment();
   for (let i = 0; i < results.length; i++) {
     let result = results[i]["item"];
-    let source;
-    if (result.p) {
-      source = result.p;
-    } else if (result.u) {
-      // Custom emote url
-      source = result.u;
-      // Should be absolute url or relative to webroot
-      if(source && !source.startsWith("http") && !source.startsWith("/")){
-        source = "/" + source;
-      }
-    } else {
-      source = `${this.path}${result["n"]}.svg`;
-    }
+    let source = this.getEmoteSource(result);
     self.emoteResult = document.createElement("img");
     self.emoteResult.classList.add("emoteImg", "loadingEmote", "resultImg");
     self.emoteResult.setAttribute("data-source", source);
@@ -427,26 +424,13 @@ EmoteSelect.prototype.updateLastUsed = function () {
   // create fragment to append images
   let usedFragment = document.createDocumentFragment();
   // loop through stored emotes
-  let pattern;
-  let source;
   used.forEach((emote) => {
-    pattern = Object.keys(emote)[0];
+    let pattern = Object.keys(emote)[0];
     let result = emoteList.filter((emote) => {
       return emote["n"] === pattern;
     })[0];
     if (result) {
-      if (result.p) {
-        source = result.p;
-      } else if (result.u) {
-        // Custom emote url
-        source = result.u;
-        // Should be absolute url or relative to webroot
-        if(source && !source.startsWith("http") && !source.startsWith("/")){
-          source = "/" + source;
-        }
-      } else {
-        source = `${this.path}${result["n"]}.svg`;
-      }
+      let source = this.getEmoteSource(result);
       this.usedImage = document.createElement("img");
       this.usedImage.setAttribute("src", source);
       this.usedImage.setAttribute("data-emoteName", result["n"]);
