@@ -142,6 +142,7 @@ EmoteSelect.prototype.donateInfo = function (groups) {
 };
 
 EmoteSelect.prototype.getEmoteSource = function (emoteObj) {
+  let source = null;
   if (emoteObj.p) {
     source = emoteObj.p;
   } else if (emoteObj.u) {
